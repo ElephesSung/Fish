@@ -30,7 +30,7 @@ Let $$K_k$$ be the number of NK cells that killed exactly $$k$$ targets. Then:
 
 $$
 \sum_{k=0}^{\infty} K_k = M, \qquad
-\mathbf{K} = (K_0,K_1,\dots) \sim \mathrm{Multinomial}\left(M,\, \mathbf{p}(\lambda)\right)
+\mathbf{K} = (K_0,K_1,\dots) \sim \mathrm{Multinomial}\left(M, \mathbf{p}(\lambda)\right)
 $$
 
 with category probabilities
