@@ -14,7 +14,7 @@ Both yield posteriors for the **per-time rate** \( r \) for each experimental co
 ## Mathematical model
 
 Over an observation window of duration $$T$$, each NK cell kills targets at rate $$r$$ (kills per unit time).  
-Let $$\lambda = r\dotT$$ be the expected number of kills **per cell** during $$T$$.
+Let $$\lambda = r\cdot T$$ be the expected number of kills **per cell** during $$T$$.
 
 Per cell,
 
