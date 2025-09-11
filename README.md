@@ -1,72 +1,39 @@
-# Fish
+# Fish --  A simple Bayesion inference workflow for quantifying the NK cell killing efficiency
 
-This mini-project explores ***NK cell–mediated cytotoxicity*** through a minimal, end-to-end Bayesian workflow.  
-Our aim is to apply Bayesian inference to quantify NK cell activity.  
+This mini-project investigates ***NK cell–mediated cytotoxicity*** through a Bayesian inference workflow. Our goal is to quantitatively characterise NK cell killing efficiency by fitting a mathematical model to experimental data. Specifically, we model the number of tumour cells killed per NK cell under varying conditions—such as treatment with antibodies or drugs—and use the posterior distribution to infer differences in cytotoxic activity. This approach not only enables statistical comparison across conditions but also allows us to evaluate the adequacy of the proposed mathematical model by comparing posterior predictions with experimental observations. Ultimately, this modelling framework serves both as a tool for hypothesis testing and as a means to uncover potential biological mechanisms underlying NK cell function. 
+
+The project is named *Fish* as a nod to the **Poisson distribution** used in the model—*Poisson* being French for "fish"—and metaphorically, to represent the process of "fishing out" hidden mechanisms from biological data using mathematical insight.
 
 ---
 
-## Mathematical model
+## Mathematical Model
 
-Over an observation window of duration $$T$$, each NK cell kills targets at rate $$r$$ (kills per unit time).  
-Let $$\lambda = r\cdot T$$ be the expected number of kills **per cell** during $$T$$.
-
-Per cell,
+We model NK cell–mediated cytotoxicity as a Poisson process, under the assumption that each NK cell kills tumour cells independently at a constant rate $r$ (kills per unit time). This implies that, over a fixed observation window of duration $T$, the number of target cells killed by an individual NK cell follows a Poisson distribution with mean $\lambda = r \cdot T$. That is, for each cell, the number of kills $N$ satisfies:
 
 $$
 N \sim \mathrm{Poisson}(\lambda), \qquad
-\Pr(N=k \mid \lambda) = e^{-\lambda}\frac{\lambda^k}{k!}
+\Pr(N = k \mid \lambda) = e^{-\lambda} \frac{\lambda^k}{k!}
 $$
 
-### Replicate as a histogram (Multinomial likelihood)
-
-In one replicate, suppose we observe **$$M$$** NK cells.  
-Let $$K_k$$ be the number of NK cells that killed exactly $$k$$ targets. Then:
+In a single experimental replicate, suppose we observe $M$ NK cells. Let $K_k$ denote the number of cells that killed exactly $k$ targets. Then the histogram of kill counts across the population, $\mathbf{K} = (K_0, K_1, \dots)$, follows a **Multinomial distribution** with total count $M$ and category probabilities $\mathbf{p}(\lambda) = (p_0(\lambda), p_1(\lambda), \dots)$, where:
 
 $$
-\sum_{k=0}^{\infty} K_k = M, \qquad
-\mathbf{K} = (K_0,K_1,\dots) \sim \mathrm{Multinomial}\left(M, \mathbf{p}(\lambda)\right)
+p_k(\lambda) = \Pr(N = k \mid \lambda) = e^{-\lambda} \frac{\lambda^k}{k!}
 $$
 
-with category probabilities
+To make the model computationally practical, we truncate the histogram at a cutoff $K_\star$. Instead of modelling an infinite number of categories, we consider explicit bins for $k = 0, 1, \dots, K_\star - 1$, and pool all higher counts into a single **tail bin**. The probability mass of this tail is given by:
 
 $$
-p_k(\lambda) = \Pr(N=k\mid\lambda) = e^{-\lambda}\frac{\lambda^k}{k!}
+p_{\ge K_\star}(\lambda) = 1 - \sum_{k = 0}^{K_\star - 1} p_k(\lambda)
 $$
 
-**Practical truncation (tail bin).**  
-To avoid infinite categories, choose a cutoff $$K_\star$$.  
-Model the explicit categories $$k=0,1,\dots,K_\star-1$$ and collect all higher counts in a **tail**:
-
-$$
-p_{\ge K_\star}(\lambda) = 1 - \sum_{k=0}^{K_\star-1} p_k(\lambda)
-$$
-
-Define
-
-$$
-\tilde{\mathbf{K}} = (K_0, \dots, K_{K_\star - 1}, K_{\ge K_\star}), \quad
-\tilde{\mathbf{p}} = \left(p_0(\lambda), \dots, p_{K_\star - 1}(\lambda), p_{\ge K_\star}(\lambda)\right)
-$$
-
-Then
+We then define the truncated histogram as $\tilde{\mathbf{K}} = (K_0, \dots, K_{K_\star - 1}, K_{\ge K_\star})$, with corresponding probabilities $\tilde{\mathbf{p}} = (p_0(\lambda), \dots, p_{K_\star - 1}(\lambda), p_{\ge K_\star}(\lambda))$, and model:
 
 $$
 \tilde{\mathbf{K}} \sim \mathrm{Multinomial}(M, \tilde{\mathbf{p}})
 $$
 
-> **Why Multinomial, not many Binomials?**  
-> The counts $$K_k$$ are **not independent** across $$k$$; they are jointly Multinomial given $$M$$ and $$\lambda$$.  
-> Fitting separate Binomials would double-count information.
-
----
-
-## Prior
-
-We put a weakly informative prior on $$\lambda$$ via its log-10:
-
-$$
-\eta = \log_{10}\lambda \sim \mathrm{Uniform}(a, b)
-\quad\Rightarrow\quad \lambda = 10^{\eta},\quad r = \frac{\lambda}{T}
-$$
+> **Why a Multinomial rather than separate Binomials?**  
+> The counts $K_k$ are not independent across $k$. Given the total number of observed NK cells $M$, the joint distribution of all category counts is Multinomial. Modelling them as independent Binomial distributions would overestimate the information content and violate the constraint that $\sum_k K_k = M$.
 
 
