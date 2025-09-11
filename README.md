@@ -1,14 +1,9 @@
-# MCMC-KillingRates
+# Fish
 
-A minimal, end-to-end Bayesian workflow for quantifying **NK cell–mediated cytotoxicity**.  
-We posit a simple Poisson killing model per NK cell, then infer killing **rates** with MCMC (PyMC).  
-Two likelihoods are implemented:
+This mini-project explores **NK cell–mediated cytotoxicity** through a minimal, end-to-end Bayesian workflow.  
+Our aim is to apply Bayesian inference to quantify NK cell activity in a more rigorous and transparent manner.  
 
-1) **Per-cell Poisson** (uses raw per-cell kill counts).  
-2) **Histogram/Multinomial** (uses a single replicate-level histogram with a tail bin).
-
-Both yield posteriors for the **per-time rate** \( r \) for each experimental condition.
-
+We implement and test a **simple Poisson killing model**, providing a foundation for further extensions to more complex mechanistic descriptions of immune–tumour interactions.
 ---
 
 ## Mathematical model
