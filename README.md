@@ -8,7 +8,7 @@ The project is named *Fish* as a nod to the **Poisson distribution** used in the
 
 ## Mathematical Model
 
-<span style="color:blue;"> We model NK cell–mediated cytotoxicity as a Poisson process, under the assumption that each NK cell kills tumour cells independently at a constant rate $r$ (kills per unit time). This implies that, over a fixed observation window of duration $T$, the number of target cells killed by an individual NK cell follows a Poisson distribution with mean $\lambda = r \cdot T$. </span>
+<span style="color:blue;">We model NK cell–mediated cytotoxicity as a Poisson process, under the assumption that each NK cell kills tumour cells independently at a constant rate $r$ (kills per unit time). This implies that, over a fixed observation window of duration $T$, the number of target cells killed by an individual NK cell follows a Poisson distribution with mean $\lambda = r \cdot T$.</span>
 
 That is, for each cell, the number of kills $N$ satisfies:
 
