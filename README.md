@@ -1,9 +1,8 @@
 # Fish
 
-This mini-project explores **NK cell–mediated cytotoxicity** through a minimal, end-to-end Bayesian workflow.  
-Our aim is to apply Bayesian inference to quantify NK cell activity in a more rigorous and transparent manner.  
+This mini-project explores ***NK cell–mediated cytotoxicity*** through a minimal, end-to-end Bayesian workflow.  
+Our aim is to apply Bayesian inference to quantify NK cell activity.  
 
-We implement and test a **simple Poisson killing model**, providing a foundation for further extensions to more complex mechanistic descriptions of immune–tumour interactions.
 ---
 
 ## Mathematical model
