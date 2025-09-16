@@ -108,3 +108,14 @@ Most experimental data points fall within the central region of the violin plots
 We developed a mathematical model of NK cell–mediated cytotoxicity under the hypothesis that each NK cell’s killing decision is independent of its previous actions. By introducing the killing rate as a key parameter and applying Bayesian inference, we quantitatively estimated cytotoxic activity across experimental conditions. Our results show a significant increase in NK cell killing rates following antibody administration compared to no treatment, with no significant difference between the Bispecific and Rituximab groups.
 
 Posterior predictive checks indicate that the model captures the main features of the experimental data, although some discrepancies remain, particularly in the tails of the predicted distributions. This suggests that while the current model provides a robust framework for quantifying NK cell cytotoxicity, additional factors—such as dependencies on prior cell decisions—may need to be incorporated. Future work will focus on refining the model to account for such influences and further improve its explanatory power.
+
+
+--- 
+## Navigation of the files
+
+- [`fish.ipynb`](./fish.ipynb): Preliminary notebook for generating synthetic data and performing MCMC-based parameter inference.
+- [`KillCountProcessing.ipynb`](./KillCountProcessing.ipynb): Main analysis notebook detailing experimental data import, visualization, MCMC parameter estimation, and model validation.
+- [`KillFrequency28.8.25.txt`](./KillFrequency28.8.25.txt): Raw experimental data file.
+- [`aha.sh`](./aha.sh): Shell script for converting PDF plots to PNG format (for convenience; can be ignored).
+- [`cluster.py`](./cluster.py): Python script used for accelerating posterior predictive validation on a remote cluster (for advanced users; can be ignored).
+- [`./results`](./results): Check the results here.
