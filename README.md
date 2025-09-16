@@ -4,7 +4,7 @@
 
 **Authors**
 
-Elephes Sung, Cathal Hosty & Rubén Pérez-Carrasco
+Cathal Hosty, Rubén Pérez-Carrasco & Elephes Sung *(names listed in alphabetical order by surname)*
 
 *Department of Life Sciences, Imperial College London, London SW7 2AZ, United Kingdom*
 
