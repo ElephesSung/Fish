@@ -55,6 +55,7 @@ $$
 Quantifying the efficiency of NK cell-mediated cytotoxic process is crucial for understanding the impact of immunotherapies and antibody-based treatments. However, NK cell killing is inherently stochastic: not all NK cells engage targets, and those that do may kill a varying number of tumour cells. To interpret such variability meaningfully, we require a probabilistic framework that reflects both biological uncertainty and experimental constraints.
 
 We model NK cell-mediated cytotoxicity as a Poisson process, under the assumption that each NK cell kills tumour cells independently and at a constant average rate $r$ over a fixed observation window of duration $T$. This leads to the number of kills $N$ per cell being Poisson-distributed with mean $\lambda = r \cdot T$:
+
 $$
 N \sim \mathrm{Poisson}(\lambda), \qquad
 \Pr(N = k \mid \lambda) = e^{-\lambda} \frac{\lambda^k}{k!}, \quad \text{where} \quad \lambda = r \cdot T
