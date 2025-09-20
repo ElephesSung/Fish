@@ -80,7 +80,7 @@ $$
 p_k(\lambda) = \Pr(N = k \mid \lambda) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad p_{\ge K} = 1 - \sum_{k=0}^{K-1} p_k(\lambda)
 $$
 
-This structure captures both the biological randomness of NK cell killing (via the Poisson model) and the statistical constraints of the observation process (via the Multinomial likelihood). To complete the Bayesian model, we place a prior over the unknown killing rate $\lambda$ (or directly over $r$), and use Markov Chain Monte Carlo (MCMC) to infer the posterior distribution of killing rates under different experimental conditions.
+This structure captures both the biological randomness of NK cell killing (via the Poisson model) and the statistical constraints of the observation process (via the Multinomial likelihood). To complete the Bayesian model, we place a prior over the unknown killing rate $r$, and use Markov Chain Monte Carlo (MCMC) to infer the posterior distribution of killing rates under different experimental conditions.
 
 This probabilistic framework allows us not only to estimate central tendencies like the mean killing rate, but also to quantify uncertainty via posterior credible intervals. Moreover, it enables rigorous comparison of killing efficiency across treatments (e.g., Rituximab vs. control), and supports model checking via posterior predictive simulation. By connecting single-cell dynamics to population-level summaries, our approach offers both mechanistic insight and robust statistical inference.
 
