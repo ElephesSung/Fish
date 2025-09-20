@@ -4,7 +4,7 @@
 
 **Authors**
 
-Cathal Hosty, Rubén Pérez-Carrasco & Elephes Sung *(names listed in alphabetical order by surname)*
+Elephes Sung, Cathal Hosty & Rubén Pérez-Carrasco
 
 *Department of Life Sciences, Imperial College London, London SW7 2AZ, United Kingdom*
 
@@ -49,6 +49,43 @@ $$
 
 > **Why a Multinomial rather than separate Binomials?**  
 > The counts $K_k$ are not independent across $k$. Given the total number of observed NK cells $M$, the joint distribution of all category counts is Multinomial. Modelling them as independent Binomial distributions would overestimate the information content and violate the constraint that $\sum_k K_k = M$.
+
+
+### Thesis language
+Quantifying the efficiency of NK cell-mediated cytotoxic process is crucial for understanding the impact of immunotherapies and antibody-based treatments. However, NK cell killing is inherently stochastic: not all NK cells engage targets, and those that do may kill a varying number of tumour cells. To interpret such variability meaningfully, we require a probabilistic framework that reflects both biological uncertainty and experimental constraints.
+
+We model NK cell-mediated cytotoxicity as a Poisson process, under the assumption that each NK cell kills tumour cells independently and at a constant average rate $r$ over a fixed observation window of duration $T$. This leads to the number of kills $N$ per cell being Poisson-distributed with mean $\lambda = r \cdot T$:
+$$
+N \sim \mathrm{Poisson}(\lambda), \qquad
+\Pr(N = k \mid \lambda) = e^{-\lambda} \frac{\lambda^k}{k!}, \quad \text{where} \quad \lambda = r \cdot T
+$$
+
+
+From this individual-cell model, we derive a population-level likelihood based on experimental data. Suppose $M$ NK cells are observed in a given condition. The experiment yields a histogram of kill counts: $K_0$ cells with zero kills, $K_1$ with one kill, and so on. Rather than model each $K_k$ as an independent Binomial, we recognise that these counts are constrained by the total number of cells:
+
+$$
+\sum_{k} K_k = M
+$$
+
+This constraint introduces dependencies among the bin counts. Therefore, the correct statistical approach is to model the entire histogram jointly using a Multinomial distribution:
+
+$$
+(K_0, K_1, \dots, K_K) \sim \mathrm{Multinomial}\left(M, ; \mathbf{p}(\lambda)\right)
+$$
+
+where $\mathbf{p}(\lambda) = (p_0(\lambda), p_1(\lambda), \dots, p_K(\lambda))$ are the probabilities of observing 0, 1, …, $K$ kills under the Poisson model, and $K$ is a chosen truncation level beyond which probabilities are pooled into a tail bin:
+
+$$
+p_k(\lambda) = \Pr(N = k \mid \lambda) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad p_{\ge K} = 1 - \sum_{k=0}^{K-1} p_k(\lambda)
+$$
+
+This structure captures both the biological randomness of NK cell killing (via the Poisson model) and the statistical constraints of the observation process (via the Multinomial likelihood). To complete the Bayesian model, we place a prior over the unknown killing rate $\lambda$ (or directly over $r$), and use Markov Chain Monte Carlo (MCMC) to infer the posterior distribution of killing rates under different experimental conditions.
+
+This probabilistic framework allows us not only to estimate central tendencies like the mean killing rate, but also to quantify uncertainty via posterior credible intervals. Moreover, it enables rigorous comparison of killing efficiency across treatments (e.g., Rituximab vs. control), and supports model checking via posterior predictive simulation. By connecting single-cell dynamics to population-level summaries, our approach offers both mechanistic insight and robust statistical inference.
+
+
+
+
 
 
 
